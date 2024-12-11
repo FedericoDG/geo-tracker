@@ -14,10 +14,10 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-  socket.on('location', (location) => {
+  socket.on('locationUpdate', (location) => {
     // Emitir la ubicación a todos los clientes conectados (si es necesario)
     console.log(`${new Date()} -> ${location.latitude}, ${location.longitude}`);
-    io.emit(location);
+    io.emit('locationUpdate', location);
   });
   socket.on('toggleLocation', (isSending) => {
     console.log(
@@ -32,7 +32,7 @@ io.on('connection', (socket) => {
 });
 
 app.get('/', (req, res) => {
-  res.send('GeoTracker Server');
+  res.send('GeoTracker Server v1.0.1');
 });
 
 server.listen(3000, () => {
